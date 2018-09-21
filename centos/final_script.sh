@@ -32,7 +32,8 @@ certbot certonly --manual \
 
 # Modify inventory.ini
 echo "openshift_master_overwrite_named_certificates=true" >> ./inventory.ini
-echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}/fullchain.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\", \"names\": [\"${DOMAIN}\"]}]" >> ./inventory.ini
+echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}/fullchain.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\", \"names\": [\"console.${DOMAIN}\"]}]" >> ./inventory.ini
+echo "openshift_hosted_router_certificate={\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}.com/cert.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\"}" >> ./inventory.ini
 # If you don't use a certificate without wildcards, you need to replace the last command by:
 # echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/console.${DOMAIN}/cert.pem\", \"keyfile\": \"/etc/letsencrypt/live/console.${DOMAIN}/privkey.pem\", \"names\": [\"console.${DOMAIN}\"]}]" >> ./inventory.ini
 
