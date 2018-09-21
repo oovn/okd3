@@ -7,9 +7,6 @@ export DOMAIN=mydomain.com
 export USERNAME=myusername
 export PASSWORD=mypassword
 export MAIL=myaddress@email.com
-export VERSION=3.10
-export API_PORT=8443
-export IP=$(curl -s ipinfo.io/ip)
 
 
 #####################
