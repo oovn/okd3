@@ -2,9 +2,9 @@
 
 Script to install OpenShift with Let's Encrypt (wildcards included).
 
-  /!\ You need to run all script as root
+> You need to run all scripts as root
 
-Run 'first_script.sh' 
-Then after reboot, set Constants on 'final_script.sh' and run it.
+1. Run 'first_script.sh' 
+2. Then after reboot, set Constants on 'final_script.sh' and run it.
 
 After reboot: Enjoy!
