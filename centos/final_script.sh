@@ -36,20 +36,20 @@ certbot certonly --manual \
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
 cat <<EOT >> inventory.ini
 
-# Declare usage of Custom Certificate
+; Declare usage of Custom Certificate
 openshift_master_overwrite_named_certificates=true
 
-# Configure Custom Certificates for the Web Console or CLI
+; Configure Custom Certificates for the Web Console or CLI
 openshift_master_cluster_hostname=console-internal.${DOMAIN}
 openshift_master_cluster_public_hostname=console.${DOMAIN}
 
-# Configure a Custom Master Host Certificate
+; Configure a Custom Master Host Certificate
 openshift_master_named_certificates=[{"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "names": ["console.${DOMAIN}"]}]
 
-# Configure a Custom Wildcard Certificate for the Default Router
+; Configure a Custom Wildcard Certificate for the Default Router
 openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
 
-# Configure a Custom Certificate for the Image Registry
+; Configure a Custom Certificate for the Image Registry
 openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
 openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
 openshift_hosted_registry_routetermination=reencrypt
