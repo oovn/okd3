@@ -18,9 +18,10 @@ export IP=$(curl -s ipinfo.io/ip)
 # Enabled EPEL Repo
 sed -i '6 s/^.*$/enabled=1/' /etc/yum.repos.d/epel.repo
 
-# Setup CertBot
+# Install CertBot
 yum install -y certbot
-certbot certonly
+
+# Configure Let's Encrypt certificate
 certbot certonly --manual \
                  --preferred-challenges dns \
                  --email $MAIL \
@@ -31,7 +32,10 @@ certbot certonly --manual \
 
 # Modify inventory.ini
 echo "openshift_master_overwrite_named_certificates=true" >> ./inventory.ini
-echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}/cert.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\", \"names\": [\"${DOMAIN}\"]}]" >> ./inventory.ini
+echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}/fullchain.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\", \"names\": [\"${DOMAIN}\"]}]" >> ./inventory.ini
+# If you don't use a certificate without wildcards, you need to replace the last command by:
+# echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/console.${DOMAIN}/cert.pem\", \"keyfile\": \"/etc/letsencrypt/live/console.${DOMAIN}/privkey.pem\", \"names\": [\"console.${DOMAIN}\"]}]" >> ./inventory.ini
+
 
 # Add Cron Task to renew certificate
 echo "@monthly  certbot renew --pre-hook=\"oc scale --replicas=0 dc router\" --post-hook=\"oc scale --replicas=1 dc router\"" > certbotcron
