@@ -27,9 +27,10 @@ certbot certonly --manual \
                  -d *.$DOMAIN \
                  -d $DOMAIN
 
-# Add Entries on your Host DNS Zone Editor
-# Ex: 
-#     Name: _acme-challenge.yourdomain.com | Type: TXT | Data: xjPMg-I6BokgUVOyIN3NJlIqbc9xGXUzyQE98dPdt1E
+## Add Entries on your Host DNS Zone Editor
+## Ex: 
+##     Name: _acme-challenge.yourdomain.com | Type: TXT | Data: xjPMg-I6BokgUVOyIN3NJlIqbc9xGXUzyQE98dPdt1E
+#####
 
 ## Modify inventory.ini 
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
