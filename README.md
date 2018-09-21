@@ -1,4 +1,4 @@
-# openshift_letsencrypt_install
+# 0penShift & Let's Encrypt Install
 
 Script to install OpenShift with Let's Encrypt (wildcards included).
 
