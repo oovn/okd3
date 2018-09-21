@@ -30,6 +30,10 @@ certbot certonly --manual \
                  -d *.$DOMAIN \
                  -d $DOMAIN
 
+# Add Entries on your Host DNS Zone Editor
+# Ex: 
+#     Name: _acme-challenge.yourdomain.com | Type: TXT | Data: xjPMg-I6BokgUVOyIN3NJlIqbc9xGXUzyQE98dPdt1E
+
 # Modify inventory.ini
 echo "openshift_master_overwrite_named_certificates=true" >> ./inventory.ini
 echo "openshift_master_named_certificates=[{\"certfile\": \"/etc/letsencrypt/live/${DOMAIN}/fullchain.pem\", \"keyfile\": \"/etc/letsencrypt/live/${DOMAIN}/privkey.pem\", \"names\": [\"console.${DOMAIN}\"]}]" >> ./inventory.ini
