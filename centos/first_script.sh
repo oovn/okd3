@@ -17,8 +17,4 @@ touch /.autorelabel
 sealert -a /var/log/audit/audit.log | cat 
 # Set SELinux Rules if previous command get alert output
 
-# Clone Repo Git for OpenShift Installation & get to workdir
-git clone https://github.com/gshipley/installcentos.git
-cd installcentos
-
 reboot
