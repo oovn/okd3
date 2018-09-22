@@ -35,10 +35,10 @@ certbot certonly --manual \
 
 ## Modify inventory.ini 
 # Declare usage of Custom Certificate
-# Configure Custom Certificates for the Web Console or CLI
+# Configure Custom Certificates for the Web Console or CLI => Doesn't Work for CLI
 # Configure a Custom Master Host Certificate
-# Configure a Custom Wildcard Certificate for the Default Router
-# Configure a Custom Certificate for the Image Registry
+# Configure a Custom Wildcard Certificate for the Default Router => Doesn't Work
+# Configure a Custom Certificate for the Image Registry 
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
 cat <<EOT >> inventory.ini
 
