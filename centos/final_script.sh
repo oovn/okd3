@@ -65,6 +65,9 @@ rm certbotcron
 #####################
 # Install OpenShift
 #####################
+# Clone Repo Git for OpenShift Installation & get to workdir
+git clone https://github.com/gshipley/installcentos.git
+cd installcentos
 ./install-openshift.sh
 
 
