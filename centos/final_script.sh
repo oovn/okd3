@@ -24,8 +24,9 @@ certbot certonly --manual \
                  --email $MAIL \
                  --server https://acme-v02.api.letsencrypt.org/directory \
                  --agree-tos \
+                 -d $DOMAIN \
                  -d *.$DOMAIN \
-                 -d $DOMAIN
+                 -d *.apps.$DOMAIN \
 
 ## Add Entries on your Host DNS Zone Editor
 ## Ex: 
