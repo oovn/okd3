@@ -77,7 +77,25 @@ export HAWKULAR_CASSANDRA=$(oc get pods --selector metrics-infra=hawkular-cassan
 export HAWKULAR_METRICS=$(oc get pods --selector metrics-infra=hawkular-metrics --no-headers -o custom-columns=name:.metadata.name)
 export HAWKULAR_METRICS_SCHEMA=$(oc get pods --selector job-name=hawkular-metrics-schema --no-headers -o custom-columns=name:.metadata.name)
 export HEAPSTER=$(oc get pods --selector metrics-infra=heapster --no-headers -o custom-columns=name:.metadata.name)
+export EDITOR=nano # Change by your favorite editor
 
+oc login https://console.$DOMAIN -u $USERNAME -p $PASSWORD
+
+# Replace all "docker.io/openshift/origin-metrics-cassandra:v3.10.0" values by
+# "docker.io/openshift/origin-metrics-cassandra:v3.11.0" and save
+KUBE_EDITOR=$EDITOR oc edit pod/$HAWKULAR_CASSANDRA
+
+# Replace all "docker.io/openshift/origin-metrics-hawkular-metrics:v3.10.0" values by
+# "docker.io/openshift/origin-metrics-hawkular-metrics:v3.11.0" and save
+KUBE_EDITOR=$EDITOR oc edit pod/$HAWKULAR_METRICS
+
+# Replace all "docker.io/openshift/origin-metrics-schema-installer:v3.10.0" values by
+# "docker.io/alv91/origin-metrics-schema-installer:v3.10.0" and save
+KUBE_EDITOR=$EDITOR oc edit pod/$HAWKULAR_METRICS_SCHEMA
+
+# Replace all "docker.io/openshift/origin-metrics-heapster:v3.10.0" values by
+# "docker.io/openshift/origin-metrics-heapster:v3.11.0" and save
+KUBE_EDITOR=$EDITOR oc edit pod/$HEAPSTER
 
 
 #####################
