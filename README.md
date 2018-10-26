@@ -7,12 +7,14 @@ Script to install OpenShift with Let's Encrypt (wildcards included).
 First:
 ```
 git clone https://github.com/kmarilleau/openshift_letsencrypt_install.git
-sh ./openshift_letsencrypt_install/first_script.sh
+cd openshift_letsencrypt_install/
+sh first_script.sh
 ```
  
 Then:
 ```
-sh ./openshift_letsencrypt_install/final_script.sh
+cd openshift_letsencrypt_install/
+sh final_script.sh
 ```
  
 Enjoy.
