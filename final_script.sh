@@ -33,32 +33,8 @@ certbot certonly --manual \
 ##     Name: _acme-challenge.yourdomain.com | Type: TXT | Data: xjPMg-I6BokgUVOyIN3NJlIqbc9xGXUzyQE98dPdt1E
 #####
 
-## Modify inventory.ini 
-# Declare usage of Custom Certificate
-# Configure Custom Certificates for the Web Console or CLI => Doesn't Work for CLI
-# Configure a Custom Master Host Certificate
-# Configure a Custom Wildcard Certificate for the Default Router => Doesn't Work
-# Configure a Custom Certificate for the Image Registry 
-## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
-# Repair openshift_metrics_schema_installer_image, see here for more information:
-# https://github.com/openshift/origin-metrics/issues/429#issuecomment-418271287
-cat <<EOT >> installcentos/inventory.ini
-
-openshift_master_overwrite_named_certificates=true
-
-openshift_master_cluster_hostname=console-internal.${DOMAIN}
-openshift_master_cluster_public_hostname=console.${DOMAIN}
-
-openshift_master_named_certificates=[{"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "names": ["console.${DOMAIN}"]}]
-
-openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
-
-openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
-openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
-openshift_hosted_registry_routetermination=reencrypt
-
-openshift_metrics_schema_installer_image:docker.io/alv91/origin-metrics-schema-installer:v3.10
-EOT
+# Replace install-openshift.sh
+mv install-openshift.sh installcentos/install-openshift.sh
 
 # Add Cron Task to renew certificate
 echo "@monthly  certbot renew --pre-hook=\"oc scale --replicas=0 dc router\" --post-hook=\"oc scale --replicas=1 dc router\"" > certbotcron
