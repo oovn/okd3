@@ -40,6 +40,8 @@ certbot certonly --manual \
 # Configure a Custom Wildcard Certificate for the Default Router => Doesn't Work
 # Configure a Custom Certificate for the Image Registry 
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
+# Repair openshift_metrics_schema_installer_image, see here for more information:
+# https://github.com/openshift/origin-metrics/issues/429#issuecomment-418271287
 cat <<EOT >> installcentos/inventory.ini
 
 openshift_master_overwrite_named_certificates=true
@@ -54,6 +56,8 @@ openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN
 openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
 openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
 openshift_hosted_registry_routetermination=reencrypt
+
+openshift_metrics_schema_installer_image:docker.io/alv91/origin-metrics-schema-installer:v3.10
 EOT
 
 # Add Cron Task to renew certificate
