@@ -73,10 +73,10 @@ cd installcentos
 # Modify Openshift-infra for repair metrics problem
 # More details for this issue and his solution here:
 # https://github.com/openshift/origin-metrics/issues/429#issuecomment-418271287
-export HAWKULAR_CASSANDRA=$(oc get pods --selector metrics-infra=hawkular-cassandra --no-headers -o custom-columns=name:.metadata.name)
-export HAWKULAR_METRICS=$(oc get pods --selector metrics-infra=hawkular-metrics --no-headers -o custom-columns=name:.metadata.name)
-export HAWKULAR_METRICS_SCHEMA=$(oc get pods --selector job-name=hawkular-metrics-schema --no-headers -o custom-columns=name:.metadata.name)
-export HEAPSTER=$(oc get pods --selector metrics-infra=heapster --no-headers -o custom-columns=name:.metadata.name)
+export HAWKULAR_CASSANDRA=$(oc get pods --all-namespaces --selector metrics-infra=hawkular-cassandra --no-headers -o custom-columns=name:.metadata.name)
+export HAWKULAR_METRICS=$(oc get pods --all-namespaces --selector metrics-infra=hawkular-metrics --no-headers -o custom-columns=name:.metadata.name)
+export HAWKULAR_METRICS_SCHEMA=$(oc get pods --all-namespaces --selector job-name=hawkular-metrics-schema --no-headers -o custom-columns=name:.metadata.name)
+export HEAPSTER=$(oc get pods --all-namespaces --selector metrics-infra=heapster --no-headers -o custom-columns=name:.metadata.name)
 export EDITOR=nano # Change by your favorite editor
 
 oc login https://console.$DOMAIN -u $USERNAME -p $PASSWORD
