@@ -40,7 +40,7 @@ certbot certonly --manual \
 # Configure a Custom Wildcard Certificate for the Default Router => Doesn't Work
 # Configure a Custom Certificate for the Image Registry 
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
-cat <<EOT >> openshift_letsencrypt_install/inventory.ini
+cat <<EOT >> installcentos/inventory.ini
 
 openshift_master_overwrite_named_certificates=true
 
