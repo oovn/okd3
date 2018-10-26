@@ -46,10 +46,11 @@ rm certbotcron
 git clone https://github.com/gshipley/installcentos.git
 
 # Replace install-openshift.sh
-mv install-openshift.sh installcentos/install-openshift.sh
+mv -f install-openshift.sh installcentos/install-openshift.sh
 
 # Install
 cd installcentos
+chmod u+x install-openshift.sh
 ./install-openshift.sh
 
 
