@@ -25,7 +25,7 @@ certbot certonly --manual \
                  --server https://acme-v02.api.letsencrypt.org/directory \
                  --agree-tos \
                  -d $DOMAIN \
-                 -d console.$DOMAIN \
+                 -d *.$DOMAIN \
                  -d *.apps.$DOMAIN \
 
 ## Add Entries on your Host DNS Zone Editor
@@ -40,7 +40,7 @@ certbot certonly --manual \
 # Configure a Custom Wildcard Certificate for the Default Router => Doesn't Work
 # Configure a Custom Certificate for the Image Registry 
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
-cat <<EOT >> inventory.ini
+cat <<EOT >> openshift_letsencrypt_install/inventory.ini
 
 openshift_master_overwrite_named_certificates=true
 
