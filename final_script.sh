@@ -71,3 +71,6 @@ gpasswd -a $USERNAME docker
 sed -i 's/#PermitRootLogin yes.*/PermitRootLogin no/' /etc/ssh/sshd_config
 echo "AllowUsers ${USERNAME}" >> /etc/ssh/sshd_config
 systemctl restart sshd
+
+# Necessary for HTTPS to be functional
+reboot
