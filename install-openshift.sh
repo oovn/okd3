@@ -156,7 +156,7 @@ openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN
 openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
 openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
 openshift_hosted_registry_routetermination=reencrypt
-openshift_metrics_schema_installer_image:docker.io/alv91/origin-metrics-schema-installer:v3.10
+openshift_metrics_schema_installer_image=docker.io/alv91/origin-metrics-schema-installer:v3.10
 EOT
 
 # add proxy in inventory.ini if proxy variables are set
