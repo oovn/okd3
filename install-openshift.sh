@@ -185,7 +185,7 @@ if [ "$PVS" = "true" ]; then
 
 	curl -o vol.yaml $SCRIPT_REPO/vol.yaml
 
-	for i in `seq 1 200`;
+	for i in `seq 10 99`;
 	do
 		DIRNAME="vol$i"
 		mkdir -p /mnt/data/$DIRNAME 
