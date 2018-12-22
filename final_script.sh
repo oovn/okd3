@@ -3,10 +3,10 @@
 #####################
 # Set Constants
 #####################
-export DOMAIN=mydomain.com
-export USERNAME=myusername
-export PASSWORD=mypassword
-export MAIL=myaddress@email.com
+export DOMAIN=vn.lamit.win
+#export USERNAME=myusername
+#export PASSWORD=mypassword
+export MAIL=amit@lamit.win
 
 
 #####################
@@ -26,7 +26,6 @@ certbot certonly --manual \
                  --agree-tos \
                  -d $DOMAIN \
                  -d *.$DOMAIN \
-                 -d *.apps.$DOMAIN \
 
 ## Add Entries on your Host DNS Zone Editor
 ## Ex: 
@@ -43,13 +42,13 @@ rm certbotcron
 # Install OpenShift
 #####################
 # Clone Repo Git for OpenShift Installation & get to workdir
-git clone https://github.com/gshipley/installcentos.git
+#git clone https://github.com/oovn/oo311.git
 
 # Replace install-openshift.sh
-mv -f install-openshift.sh installcentos/install-openshift.sh
+#mv -f install-openshift.sh installcentos/install-openshift.sh
 
 # Install
-cd installcentos
+#cd installcentos
 chmod u+x install-openshift.sh
 ./install-openshift.sh
 
@@ -59,18 +58,18 @@ chmod u+x install-openshift.sh
 #####################
 
 # Setup User
-adduser $USERNAME
-passwd $USERNAME
-usermod -aG wheel $USERNAME
+#adduser $USERNAME
+#passwd $USERNAME
+#usermod -aG wheel $USERNAME
 
 # Add User to Docker Group
-groupadd docker
-gpasswd -a $USERNAME docker
+#groupadd docker
+#gpasswd -a $USERNAME docker
 
 # Configure SSH
-sed -i 's/#PermitRootLogin yes.*/PermitRootLogin no/' /etc/ssh/sshd_config
-echo "AllowUsers ${USERNAME}" >> /etc/ssh/sshd_config
-systemctl restart sshd
+#sed -i 's/#PermitRootLogin yes.*/PermitRootLogin no/' /etc/ssh/sshd_config
+#echo "AllowUsers ${USERNAME}" >> /etc/ssh/sshd_config
+#systemctl restart sshd
 
 # Necessary for HTTPS to be functional
 reboot
