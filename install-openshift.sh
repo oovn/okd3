@@ -9,7 +9,7 @@ export DOMAIN=${DOMAIN:="$(curl -s ipinfo.io/ip).nip.io"}
 export USERNAME=${USERNAME:="$(whoami)"}
 export PASSWORD=${PASSWORD:=password}
 export VERSION=${VERSION:="3.11"}
-export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/gshipley/installcentos/master"}
+#export SCRIPT_REPO=${SCRIPT_REPO:="https://raw.githubusercontent.com/gshipley/installcentos/master"}
 export IP=${IP:="$(ip route get 8.8.8.8 | awk '{print $NF; exit}')"}
 export API_PORT=${API_PORT:="8443"}
 
@@ -83,7 +83,7 @@ fi
 # install the packages for Ansible
 yum -y --enablerepo=epel install pyOpenSSL
 
-curl -o ansible.rpm https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.6.5-1.el7.ans.noarch.rpm
+curl -o ansible.rpm https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.7.5-1.el7.ans.noarch.rpm
 yum -y --enablerepo=epel install ansible.rpm
 
 [ ! -d openshift-ansible ] && git clone https://github.com/openshift/openshift-ansible.git
@@ -93,7 +93,7 @@ cd openshift-ansible && git fetch && git checkout release-${VERSION} && cd ..
 cat <<EOD > /etc/hosts
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-${IP}		$(hostname) console console.${DOMAIN}  
+${IP}		$(hostname) ${DOMAIN}  
 EOD
 
 if [ -z $DISK ]; then 
@@ -135,8 +135,8 @@ if [ "$memory" -lt "16777216" ]; then
 	export LOGGING="False"
 fi
 
-curl -o inventory.download $SCRIPT_REPO/inventory.ini
-envsubst < inventory.download > inventory.ini
+#curl -o inventory.download $SCRIPT_REPO/inventory.ini
+#envsubst < inventory.download > inventory.ini
 
 ## Modify inventory.ini 
 # Declare usage of Custom Certificate
@@ -147,17 +147,17 @@ envsubst < inventory.download > inventory.ini
 ## See here for more explanation: https://docs.okd.io/latest/install_config/certificate_customization.html
 # Repair openshift_metrics_schema_installer_image, see here for more information:
 # https://github.com/openshift/origin-metrics/issues/429#issuecomment-418271287
-cat <<EOT >> inventory.ini
-openshift_master_overwrite_named_certificates=true
-openshift_master_cluster_hostname=console-internal.${DOMAIN}
-openshift_master_cluster_public_hostname=console.${DOMAIN}
-openshift_master_named_certificates=[{"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "names": ["console.${DOMAIN}"]}]
-openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
-openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
-openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
-openshift_hosted_registry_routetermination=reencrypt
-openshift_metrics_schema_installer_image=docker.io/alv91/origin-metrics-schema-installer:v3.10
-EOT
+#cat <<EOT >> inventory.ini
+#openshift_master_overwrite_named_certificates=true
+#openshift_master_cluster_hostname=${DOMAIN}
+#openshift_master_cluster_public_hostname=cph.${DOMAIN}
+#openshift_master_named_certificates=[{"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "names": ["console.${DOMAIN}"]}]
+#openshift_hosted_router_certificate={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
+#openshift_hosted_registry_routehost=registry.apps.${DOMAIN}
+#openshift_hosted_registry_routecertificates={"certfile": "/etc/letsencrypt/live/${DOMAIN}/cert.pem", "keyfile": "/etc/letsencrypt/live/${DOMAIN}/privkey.pem", "cafile": "/etc/letsencrypt/live/${DOMAIN}/chain.pem"}
+#openshift_hosted_registry_routetermination=reencrypt
+#openshift_metrics_schema_installer_image=docker.io/alv91/origin-metrics-schema-installer:v3.10
+#EOT
 
 # add proxy in inventory.ini if proxy variables are set
 if [ ! -z "${HTTPS_PROXY:-${https_proxy:-${HTTP_PROXY:-${http_proxy}}}}" ]; then
@@ -207,7 +207,7 @@ echo "* Your password is $PASSWORD "
 echo "*"
 echo "* Login using:"
 echo "*"
-echo "$ oc login -u ${USERNAME} -p ${PASSWORD} https://console.$DOMAIN:$API_PORT/"
+echo "$ oc login -u ${USERNAME} -p ${PASSWORD} https://$DOMAIN:$API_PORT/"
 echo "******"
 
-oc login -u ${USERNAME} -p ${PASSWORD} https://console.$DOMAIN:$API_PORT/
+oc login -u ${USERNAME} -p ${PASSWORD} https://$DOMAIN:$API_PORT/
